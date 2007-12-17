@@ -29,7 +29,6 @@ BuildRequires: update-alternatives
 BuildRequires: jpackage-utils
 BuildRequires: java-devel >= 1.5.0
 %endif
-BuildRoot: %{_tmppath}/%{name}-%{version}-build
 
 %description
 This is the Berkeley DB XML from Sleepycat Software.
