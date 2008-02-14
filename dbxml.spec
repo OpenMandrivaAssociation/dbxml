@@ -9,6 +9,7 @@ Name: dbxml
 Version: %{dbxml_version}
 Release: %mkrel 1
 Group: Development/Libraries
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Berkeley DB XML
 URL: http://www.sleepycat.com/products/xml.shtml
 License:  Other License(s), see package, BSD
