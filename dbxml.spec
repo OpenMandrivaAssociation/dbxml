@@ -8,7 +8,7 @@
 Name: dbxml
 Version: %{dbxml_version}
 Release: %mkrel 2
-Group: Development/Libraries
+Group: Databases
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Berkeley DB XML
 URL: http://www.oracle.com/database/berkeley-db/xml/index.html
@@ -42,7 +42,7 @@ This is the Berkeley DB XML from Sleepycat Software.
 
 %package -n %libdbxml
 Summary: Berkeley DB XML
-Group: Development/Libraries
+Group: System/Libraries
 
 %description -n %libdbxml
 Berkeley DB XML
@@ -58,7 +58,7 @@ Berkeley DB XML
 
 %package -n dbxml-java
 Summary: Berkeley DB XML Java
-Group: Development/Libraries
+Group: System/Libraries
 
 %description -n dbxml-java
 Berkeley DB XML Java
@@ -78,7 +78,7 @@ Berkeley DB XML Java
 
 %package -n %{libxqilla}
 Summary: Xqilla library
-Group: Development/Libraries
+Group: System/Libraries
 
 %description  -n %{libxqilla}
 Xqilla library
@@ -89,7 +89,7 @@ Xqilla library
 
 %package -n %{libxqilla_devel}
 Summary: Xqilla devel library
-Group: Development/Libraries
+Group: Development/Databases
 
 %description  -n %{libxqilla_devel}
 Xqilla devel library
@@ -104,7 +104,7 @@ Xqilla devel library
 
 %package utils
 Summary: Berkeley DB XML
-Group: Development/Libraries
+Group: Databases
 Requires: %libdbxml = %{version}
 
 %description utils
@@ -118,7 +118,7 @@ This is the Berkeley DB XML from Sleepycat Software.
 
 %package -n %libdbxml-devel
 Summary: Berkeley DB XML development libraries
-Group: Development/Libraries
+Group: Development/Databases
 Requires: xerces-c-devel
 Requires: db%{db_version}-devel
 Requires: libstdc++-devel 
@@ -148,7 +148,7 @@ from Sleepycat Software.
 
 %package doc
 Summary: Berkeley DB XML development libraries
-Group: Development/Libraries
+Group: Databases
 
 %description doc
 These are development libraries and headers for the Berkeley DB XML
