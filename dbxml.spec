@@ -25,6 +25,7 @@ Patch7: patch.%{dbxml_version}.8
 Patch8: patch.%{dbxml_version}.9
 Patch9: patch.%{dbxml_version}.10
 Patch10: dbxml-2.3.10-dbxml-install.patch
+Patch11: dbxml-2.3.10-lib64.patch
 BuildRequires: db%{db_version}-devel
 BuildRequires: xerces-c-devel 
 BuildRequires: libicu-devel 
@@ -173,6 +174,7 @@ from Sleepycat Software.
 %patch8 -p1
 #%patch9 -p1
 %patch10 -p1 -b .install 
+%patch11 -p1 -b .lib64
 
 %build
 %if %with_java
