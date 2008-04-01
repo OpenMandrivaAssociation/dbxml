@@ -7,11 +7,11 @@
 
 Name: dbxml
 Version: %{dbxml_version}
-Release: %mkrel 1
+Release: %mkrel 2
 Group: Development/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Berkeley DB XML
-URL: http://www.sleepycat.com/products/xml.shtml
+URL: http://www.oracle.com/database/berkeley-db/xml/index.html
 License:  Other License(s), see package, BSD
 Source0: dbxml-%{dbxml_version}.tar.gz
 Patch0: patch.%{dbxml_version}.1
@@ -23,7 +23,8 @@ Patch5: patch.%{dbxml_version}.6
 Patch6: patch.%{dbxml_version}.7
 Patch7: patch.%{dbxml_version}.8
 Patch8: patch.%{dbxml_version}.9
-Patch9: dbxml-2.3.10-dbxml-install.patch
+Patch9: patch.%{dbxml_version}.10
+Patch10: dbxml-2.3.10-dbxml-install.patch
 BuildRequires: db%{db_version}-devel
 BuildRequires: xerces-c-devel 
 BuildRequires: libicu-devel 
@@ -170,7 +171,8 @@ from Sleepycat Software.
 %patch6 -p1 
 %patch7 -p1 
 %patch8 -p1
-%patch9 -p1 -b .install 
+#%patch9 -p1
+%patch10 -p1 -b .install 
 
 %build
 %if %with_java
