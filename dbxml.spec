@@ -1,4 +1,4 @@
-%define db_version 4.5
+%define db_version 4.6
 %define dbxml_version 2.3.10
 %define libdbxml %mklibname dbxml 2.3
 
@@ -7,7 +7,7 @@
 
 Name: dbxml
 Version: %{dbxml_version}
-Release: %mkrel 2
+Release: %mkrel 3
 Group: Databases
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Berkeley DB XML
@@ -26,6 +26,7 @@ Patch8: patch.%{dbxml_version}.9
 Patch9: patch.%{dbxml_version}.10
 Patch10: dbxml-2.3.10-dbxml-install.patch
 Patch11: dbxml-2.3.10-lib64.patch
+Patch12: dbxml-2.3.10-db46.patch
 BuildRequires: db%{db_version}-devel
 BuildRequires: xerces-c-devel 
 BuildRequires: libicu-devel 
@@ -175,6 +176,7 @@ from Sleepycat Software.
 #%patch9 -p1
 %patch10 -p1 -b .install 
 %patch11 -p1 -b .lib64
+%patch12 -p1 -b .lib64
 
 %build
 %if %with_java
