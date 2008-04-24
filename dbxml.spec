@@ -1,36 +1,30 @@
 %define db_version 4.6
-%define dbxml_version 2.3.10
-%define libdbxml %mklibname dbxml 2.3
+%define dbxml_version 2.4.11
+%define libdbxml %mklibname dbxml 2.4
+%define libdbxmldev %mklibname dbxml -d
 
 %define with_java 1
 %{?_without_java: %{expand: %%global with_java 0}}
 
+%define enable_debug 1
+%{?_enable_debug: %{expand: %%global enable_debug 1}}
+
 Name: dbxml
 Version: %{dbxml_version}
-Release: %mkrel 3
+Release: %mkrel 1
 Group: Databases
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Berkeley DB XML
 URL: http://www.oracle.com/database/berkeley-db/xml/index.html
 License:  Other License(s), see package, BSD
 Source0: dbxml-%{dbxml_version}.tar.gz
-Patch0: patch.%{dbxml_version}.1
-Patch1: patch.%{dbxml_version}.2
-Patch2: patch.%{dbxml_version}.3
-Patch3: patch.%{dbxml_version}.4
-Patch4: patch.%{dbxml_version}.5
-Patch5: patch.%{dbxml_version}.6
-Patch6: patch.%{dbxml_version}.7
-Patch7: patch.%{dbxml_version}.8
-Patch8: patch.%{dbxml_version}.9
-Patch9: patch.%{dbxml_version}.10
-Patch10: dbxml-2.3.10-dbxml-install.patch
-Patch11: dbxml-2.3.10-lib64.patch
-Patch12: dbxml-2.3.10-db46.patch
+Patch0: dbxml-2.3.10-dbxml-install.patch
 BuildRequires: db%{db_version}-devel
-BuildRequires: xerces-c-devel 
 BuildRequires: libicu-devel 
 BuildRequires: update-alternatives
+BuildRequires: xerces-c-devel >= 2.8.0
+BuildRequires: libxqilla-devel >= 2.1.1
+BuildRequires: swig
 %if %with_java
 BuildRequires: jpackage-utils
 BuildRequires: java-devel >= 1.7.0
@@ -51,8 +45,8 @@ Berkeley DB XML
 
 %files -n %libdbxml
 %defattr(-,root,root)
-%{_libdir}/libdbxml-2.3.so
-%{_libdir}/libdbxml-2.3.la       
+%{_libdir}/libdbxml-2.4.so
+%{_libdir}/libdbxml-2.4.la       
 
 #------------------------------------------------------------------------
 
@@ -68,39 +62,10 @@ Berkeley DB XML Java
 %files -n dbxml-java
 %defattr(-,root,root)
 %{_javadir}/dbxml.jar
-%{_libdir}/libdbxml_java-2.3.so
-%{_libdir}/libdbxml_java-2.3_g.so
+%{_libdir}/libdbxml_java-2.4.so
+%{_libdir}/libdbxml_java-2.4_g.so
 
 %endif
-
-#------------------------------------------------------------------------
-
-%define libxqilla %mklibname xqilla 1
-%define libxqilla_devel %mklibname xqilla -d
-
-%package -n %{libxqilla}
-Summary: Xqilla library
-Group: System/Libraries
-
-%description  -n %{libxqilla}
-Xqilla library
-
-%files -n  %{libxqilla}
-%defattr(0755,root,root)
-%{_libdir}/libxqilla.so.*
-
-%package -n %{libxqilla_devel}
-Summary: Xqilla devel library
-Group: Development/Databases
-
-%description  -n %{libxqilla_devel}
-Xqilla devel library
-
-%files -n  %{libxqilla_devel}
-%defattr(0755,root,root)
-%{_libdir}/libxqilla.so
-%{_libdir}/libxqilla.la
-%{_includedir}/xqilla
 
 #------------------------------------------------------------------------
 
@@ -118,7 +83,7 @@ This is the Berkeley DB XML from Sleepycat Software.
 
 #------------------------------------------------------------------------
 
-%package -n %libdbxml-devel
+%package -n %libdbxmldev
 Summary: Berkeley DB XML development libraries
 Group: Development/Databases
 Requires: xerces-c-devel
@@ -130,12 +95,13 @@ Requires: dbxml-java = %version
 %endif
 Provides: dbxml-devel = %version
 Provides: libdbxml-devel = %version
+Obsoletes: %{_lib}dbxml2.3-devel
 
-%description -n %libdbxml-devel
+%description -n %libdbxmldev
 These are development libraries and headers for the Berkeley DB XML
 from Sleepycat Software.
 
-%files -n %libdbxml-devel 
+%files -n %libdbxmldev 
 %defattr(-,root,root)
 %{_includedir}/dbxml
 %{_libdir}/libdbxml-2.so       
@@ -143,7 +109,7 @@ from Sleepycat Software.
 %if %with_java
 %{_libdir}/libdbxml_java-2.so  
 %{_libdir}/libdbxml_java.so
-%{_libdir}/libdbxml_java-2.3.la
+%{_libdir}/libdbxml_java-2.4.la
 %endif
 
 #------------------------------------------------------------------------
@@ -164,46 +130,15 @@ from Sleepycat Software.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1 
-%patch5 -p1 
-%patch6 -p1 
-%patch7 -p1 
-%patch8 -p1
-#%patch9 -p1
-%patch10 -p1 -b .install 
-%patch11 -p1 -b .lib64
-%patch12 -p1 -b .lib64
+%patch0 -p1 -b .install 
 
 %build
 %if %with_java
     source %_sysconfdir/java/java.conf
 %endif
 
-CFLAGS="%{optflags} -fPIC "
-CXXFLAGS="%{optflags} -fPIC"
-CPPFLAGS="-I%_includedir/db4" 
-export CFLAGS CXXFLAGS CPPFLAGS
-
-#################  build xqilla
-
-mkdir -p xqilla/build_unix
-pushd xqilla/build_unix
-	
-	../configure \
-    	--with-xerces=%_prefix \
-		--libdir=%_libdir \
-		--prefix=%_prefix \
-		--disable-static
-
-	%make && make DESTDIR=%buildroot install
-popd
-
-
-#################  build dbxml
+CPPFLAGS="-I%_includedir/db4 -DPIC -fPIC" 
+export CPPFLAGS
 
 pushd dbxml/dist
 %if %with_java
@@ -226,8 +161,11 @@ pushd dbxml/dist
     --disable-java \
 %endif
     --with-xerces=%_prefix \
-	--with-xqilla=%buildroot/%_prefix \
+	--with-xqilla=%_prefix \
     --with-berkeleydb=%_prefix \
+	%if %{enable_debug}
+		--enable-debug \
+	%endif
 	--disable-static
 
     make 
@@ -235,11 +173,9 @@ popd
 
 %install
 rm -rf %buildroot
-for name in xqilla/build_unix dbxml/build_unix; do
-    pushd ${name}
-        make DESTDIR=%buildroot install
-    popd
-done
+pushd dbxml/build_unix
+	make DESTDIR=%buildroot install
+popd
 
 %if %with_java
 # Move jar to proper place
