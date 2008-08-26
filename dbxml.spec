@@ -27,7 +27,7 @@ BuildRequires: libxqilla-devel >= 2.1.1
 BuildRequires: swig
 %if %with_java
 BuildRequires: jpackage-utils
-BuildRequires: java-devel >= 1.7.0
+BuildRequires: java-devel >= 1.6.0
 BuildRequires: %{_lib}dbjava%{db_version}
 %endif
 
