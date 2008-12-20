@@ -1,3 +1,6 @@
+%define _disable_ld_no_undefined	1
+%define _disable_ld_as_needed		1
+
 %define db_version 4.6
 %define dbxml_version 2.4.11
 %define libdbxml %mklibname dbxml 2.4
