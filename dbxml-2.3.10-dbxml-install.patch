@@ -1,0 +1,21 @@
+--- dbxml-2.3.10/dbxml/dist/Makefile.defs.in	2007-01-19 13:52:44.000000000 -0200
++++ dbxml-2.3.10.orig/dbxml/dist/Makefile.defs.in	2007-12-20 15:37:24.000000000 -0200
+@@ -6,12 +6,12 @@
+ ##################################################
+ # Installation directories and permissions.
+ ##################################################
+-prefix=	@prefix@
+-exec_prefix=@exec_prefix@
+-bindir=	@bindir@
+-includedir=@includedir@/dbxml
+-libdir=	@libdir@
+-docdir=	$(prefix)/docs
++prefix=	$(DESTDIR)@prefix@
++exec_prefix=$(DESTDIR)@exec_prefix@
++bindir=	$(DESTDIR)@bindir@
++includedir=$(DESTDIR)@includedir@/dbxml
++libdir=	$(DESTDIR)@libdir@
++docdir=	$(prefix)/share/doc/dbxml
+ 
+ dmode=	755
+ emode=	555
