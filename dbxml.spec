@@ -18,7 +18,7 @@ Release: %mkrel 3
 Group: Databases
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Berkeley DB XML
-URL: http://www.oracle.com/database/berkeley-db/xml/index.html
+URL: https://www.oracle.com/database/berkeley-db/xml/index.html
 License:  Other License(s), see package, BSD
 Source0: dbxml-%{dbxml_version}.tar.gz
 Patch0: dbxml-2.3.10-dbxml-install.patch
