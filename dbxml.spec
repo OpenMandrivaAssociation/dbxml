@@ -14,7 +14,7 @@
 
 Name: dbxml
 Version: %{dbxml_version}
-Release: %mkrel 3
+Release: 4
 Group: Databases
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Berkeley DB XML
